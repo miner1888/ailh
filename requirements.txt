@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+sqlalchemy==1.4.46
+alembic==1.9.4
+pydantic[email]==1.10.13
+# psycopg2-binary
+pytest
+httpx
+# uuid-extensions # Failed to install, using uuid.uuid4()
+pytest-asyncio
