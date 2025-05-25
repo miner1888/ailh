@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Trading Strategy{% endblock %}
+
+{% block content %}
+<section id="add-strategy-section">
+    <h2>Add New Trading Strategy</h2>
+    <form id="addStrategyForm">
+        <div>
+            <label for="api_id">API Key (Alias):</label>
+            <select id="api_id" name="api_id" required>
+                <option value="">Loading APIs...</option>
+            </select>
+        </div>
+        <div>
+            <label for="strategy_name">Strategy Name:</label>
+            <input type="text" id="strategy_name" name="strategy_name" required>
+        </div>
+        <div>
+            <label for="trading_pair">Trading Pair (e.g., SUI/USDT):</label>
+            <input type="text" id="trading_pair" name="trading_pair" value="SUI/USDT" required>
+        </div>
+        <div>
+            <label for="initial_order_amount_usdt">Initial Order Amount (USDT):</label>
+            <input type="number" step="0.01" id="initial_order_amount_usdt" name="initial_order_amount_usdt" value="10" required>
+        </div>
+
+        <h4>Buy Settings</h4>
+        <div>
+            <label for="buy_trigger_fall_percentage">Buy Trigger Fall Percentage (0 for no check):</label>
+            <input type="number" step="0.01" id="buy_trigger_fall_percentage" name="buy_trigger_fall_percentage" value="0" required>
+        </div>
+        <div>
+            <label for="buy_confirm_callback_percentage">Buy Confirm Callback Percentage (if both 0, buy at current):</label>
+            <input type="number" step="0.01" id="buy_confirm_callback_percentage" name="buy_confirm_callback_percentage" value="0" required>
+        </div>
+
+        <h4>Sell Settings</h4>
+        <div>
+            <label for="sell_trigger_rise_percentage">Sell Trigger Rise Percentage:</label>
+            <input type="number" step="0.01" id="sell_trigger_rise_percentage" name="sell_trigger_rise_percentage" value="2" required>
+        </div>
+        <div>
+            <label for="sell_callback_percentage">Sell Callback Percentage:</label>
+            <input type="number" step="0.01" id="sell_callback_percentage" name="sell_callback_percentage" value="0.2" required>
+        </div>
+
+        <h4>Cover (补仓) Settings</h4>
+        <div>
+            <label for="max_cover_count">Max Cover Count:</label>
+            <input type="number" id="max_cover_count" name="max_cover_count" value="5" required>
+        </div>
+        <div>
+            <label for="cover_multiplier">Cover Multiplier (default 1):</label>
+            <input type="number" step="0.1" id="cover_multiplier" name="cover_multiplier" value="1">
+        </div>
+        <div>
+            <label for="cover_trigger_fall_percentage">Cover Trigger Fall Percentage:</label>
+            <input type="number" step="0.01" id="cover_trigger_fall_percentage" name="cover_trigger_fall_percentage" value="1" required>
+        </div>
+        <div>
+            <label for="cover_confirm_callback_percentage">Cover Confirm Callback Percentage:</label>
+            <input type="number" step="0.01" id="cover_confirm_callback_percentage" name="cover_confirm_callback_percentage" value="0.1" required>
+        </div>
+        <div>
+            <label for="cover_reference_price">Cover Reference Price:</label>
+            <select id="cover_reference_price" name="cover_reference_price">
+                <option value="average_holding">Average Holding Price</option>
+                <option value="last_buy_price">Last Buy Price</option>
+                <option value="initial_price">Initial Buy Price</option>
+            </select>
+        </div>
+
+        <h4>Order Settings</h4>
+        <div>
+            <label for="order_type">Order Type:</label>
+            <select id="order_type" name="order_type">
+                <option value="market">Market Order</option>
+                <option value="limit">Limit Order</option>
+            </select>
+        </div>
+        <div>
+            <input type="checkbox" id="cyclic_execution" name="cyclic_execution" checked>
+            <label for="cyclic_execution">Cyclic Execution (Loop strategy)</label>
+        </div>
+        <div>
+            <input type="checkbox" id="cover_orders_participate_in_profit_taking" name="cover_orders_participate_in_profit_taking">
+            <label for="cover_orders_participate_in_profit_taking">Cover Orders Participate in Individual Profit Taking</label>
+        </div>
+        
+        <h4>Timeout Settings</h4>
+        <div>
+            <input type="checkbox" id="enable_order_timeout" name="enable_order_timeout">
+            <label for="enable_order_timeout">Enable Order Timeout</label>
+        </div>
+        <div id="orderTimeoutSecondsContainer" style="display:none;">
+            <label for="order_timeout_seconds">Order Timeout (seconds):</label>
+            <input type="number" id="order_timeout_seconds" name="order_timeout_seconds" value="60">
+        </div>
+
+        <button type="submit">Save Strategy</button>
+    </form>
+</section>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', path='/js/add_strategy.js') }}" defer></script>
+{% endblock %}
